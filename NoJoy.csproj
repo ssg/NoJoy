@@ -100,10 +100,12 @@
     <None Include="app.manifest">
       <SubType>Designer</SubType>
     </None>
+    <None Include="LICENSE" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
