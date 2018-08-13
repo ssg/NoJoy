@@ -26,11 +26,20 @@ I enumerate gaming devices using WMI. I didn't want to enter the world of SetupD
 simply invokes PowerShell to do that, which might be Windows 10 specific. If you have the will, feel free 
 to adapt it to a native method.
 
+# To Do's
+
+- More test coverage
+- Reporting errors to user (currently the tool simply refuses to change state in case of an error)
+- Native enable/disable for better compatibility with older Windows versions
+- Proper setup and signed binaries, so UAC doesn't perplex the user
+
 # Contribution
 
 Please test it on different joysticks as I'm not sure how it will perform. Saitek setup is basically a hack
 and other brands might need different hacks as well. Unfortunately Windows doesn't provide an easy path to 
 access correct identifiers of gaming devices, or even better a simpler API to disable/enable input devices.
+
+Feel free to send in pull requests aligned with TODO as well.
 
 # License
 
