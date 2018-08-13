@@ -1,0 +1,101 @@
+﻿<Window x:Class="NoJoy.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NoJoy"
+        mc:Ignorable="d"
+        Title="NoJoy - Quick enable/disable tool for game controllers" Height="350" Width="640" SizeToContent="WidthAndHeight">
+
+    <Window.DataContext>
+        <local:MainWindowViewModel />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <ObjectDataProvider x:Key="Controllers"
+                            MethodName="GetControllers"
+                            ObjectType="{x:Type local:WmiControllerEnumerator}" />
+        <local:BoolToColorConverter x:Key="boolToColorConverter" />
+    </Window.Resources>
+
+    <StackPanel Margin="10">
+        <TextBlock FontSize="24">Game Controllers</TextBlock>
+        <ItemsControl Margin="5"
+                      DataContext="{Binding Source={StaticResource Controllers}, Path=Items}"
+                      ItemsSource="{Binding}"
+                      Focusable="False">
+
+            <ItemsControl.Style>
+                <Style TargetType="ItemsControl">
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Items.Count}" Value="0">
+                            <Setter Property="Visibility"  Value="Hidden" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ItemsControl.Style>
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Width="300" Margin="10,5,10,5" HorizontalAlignment="Center" MaxWidth="160">
+                        <TextBlock Opacity="0.5"
+                                   Margin="10"
+                                   FontSize="70"
+                                   Text="&#x1F579;"
+                                   HorizontalAlignment="Center"></TextBlock>
+                        <TextBlock FontSize="20" Text="{Binding Path=Name}"
+                                   HorizontalAlignment="Center"
+                                   Height="56"
+                                   TextWrapping="Wrap"
+                                   MaxWidth="160" ></TextBlock>
+                        <Button x:Name="EnableDisableButton"
+                                HorizontalAlignment="Center"
+                                FontSize="15"
+                                Margin="0,10,0,10"
+                                Padding="5,5,10,5"
+                                Width="90"
+                                IsEnabled="{Binding Path=IsButtonEnabled}"
+                                Click="EnableDisableButton_Click">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal" Margin="-5,0,0,0">
+                                    <Border Margin="0,0,10,0" BorderBrush="Black" BorderThickness="1">
+                                        <Canvas Width="10"
+                                                Background="{Binding Path=IsEnabled, Converter={StaticResource boolToColorConverter}}">
+                                        </Canvas>
+                                    </Border>
+                                    <TextBlock Text="{Binding Path=ButtonText}"></TextBlock>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!-- not found text -->
+        <TextBlock Margin="10" Text="No game controllers found">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Visibility" Value="Hidden" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Count}" Value="0">
+                            <Setter Property="Visibility"  Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <TextBlock Opacity="0.3" HorizontalAlignment="Right">
+            <Hyperlink x:Name="nameLink" Click="nameLink_Click"
+                       FontStyle="Normal" Foreground="Black"
+                       TextDecorations="{x:Null}">Sedat Kapanoglu</Hyperlink> - Aug 2018
+        </TextBlock>
+    </StackPanel>
+</Window>
