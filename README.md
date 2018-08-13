@@ -2,6 +2,8 @@
 
 Simple tool for enabling/disabling game controllers quickly.
 
+![screenshot](https://github.com/ssg/NoJoy/blob/master/screenshot.png?raw=true)
+
 # History
 
 My friend [@detaybey](https://github.com/detaybey) gifted me the game [INSIDE](http://www.playdead.com/games/inside/) 
