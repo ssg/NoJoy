@@ -20,6 +20,12 @@ Yesterday, I fell asleep during the day and was wide awake at night. So I gave i
 this tool. I was looking forward on making something on WPF as I'm quite fond of it. I liked the development
 process a lot. So, essentially this is my first WPF app.
 
+# Technical Notes
+
+I enumerate gaming devices using WMI. I didn't want to enter the world of SetupDi to enable/disable so the tool
+simply invokes PowerShell to do that, which might be Windows 10 specific. If you have the will, feel free 
+to adapt it to a native method.
+
 # Contribution
 
 Please test it on different joysticks as I'm not sure how it will perform. Saitek setup is basically a hack
