@@ -31,6 +31,7 @@ limitations under the License.
                             MethodName="GetControllers"
                             ObjectType="{x:Type local:WmiControllerEnumerator}" />
         <local:BoolToColorConverter x:Key="boolToColorConverter" />
+        <local:ErrorVisibilityConverter x:Key="errorVisibilityConverter" />
     </Window.Resources>
 
     <StackPanel Margin="10">
@@ -89,6 +90,21 @@ limitations under the License.
                                 </StackPanel>
                             </Button.Content>
                         </Button>
+                        <StackPanel Visibility="{Binding Path=Error, Converter={StaticResource errorVisibilityConverter}}">
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Stretch">
+                                <Button x:Name="ErrorCloseButton"
+                                        Content="&#x274c;"
+                                        Width="16"
+                                        Height="16"
+                                        FontSize="8"
+                                        Click="OnErrorCloseButtonClicked"></Button>
+                                <TextBlock Text="Error" FontSize="16" Padding="4,0" FontWeight="Bold"></TextBlock>
+                            </StackPanel>
+                            <TextBlock Text="{Binding Path=ErrorMessage}"
+                                       HorizontalAlignment="Left"
+                                       TextWrapping="Wrap"></TextBlock>
+                        </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
