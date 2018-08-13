@@ -70,8 +70,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BoolToColorConverter.cs" />
+    <Compile Include="ErrorVisibilityConverter.cs" />
     <Compile Include="GameController.cs" />
     <Compile Include="PowerShell.cs" />
+    <Compile Include="PowerShellOperationResult.cs" />
     <Compile Include="WmiControllerEnumerator.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">

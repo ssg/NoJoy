@@ -27,6 +27,13 @@ namespace NoJoy
             }
         }
 
+        private void OnErrorCloseButtonClicked(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var controller = button.DataContext as GameController;
+            controller.ErrorMessage = null;
+        }
+
         private void nameLink_Click(object sender, RoutedEventArgs e)
         {
             Process.Start("https://github.com/ssg");

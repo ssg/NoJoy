@@ -48,6 +48,18 @@ namespace NoJoy
             }
         }
 
+        private string errorMessage;
+
+        public string ErrorMessage
+        {
+            get { return errorMessage; }
+            set
+            {
+                errorMessage = value;
+                onPropertyChanged(nameof(ErrorMessage));
+            }
+        }
+
         public bool IsEnabled => State == GameControllerState.Enabled;
 
         public string ButtonText => IsEnabled ? "Disable" : "Enable";
@@ -78,15 +90,18 @@ namespace NoJoy
 
         private void changeStateInBackground(string command, GameControllerState newState, GameControllerState oldState)
         {
+            ErrorMessage = null;
             ThreadPool.QueueUserWorkItem(delegate
             {
-                if (PowerShell.RunElevated($"{command} {standardArguments} -InstanceId '{DeviceId}'"))
+                var result = PowerShell.RunElevated($"{command} {standardArguments} -InstanceId '{DeviceId}'");
+                if (result.IsSuccess)
                 {
                     State = newState;
                 }
                 else
                 {
                     State = oldState;
+                    ErrorMessage = result.ErrorMessage;
                 }
             }, this);
         }

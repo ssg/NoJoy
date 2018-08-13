@@ -24,8 +24,9 @@ namespace NoJoy
         private const string elevatedVerb = "runas";
         private const int timeoutMilliseconds = 30_000;
 
-        public static bool RunElevated(string cmd)
+        public static PowerShellOperationResult RunElevated(string cmd)
         {
+            PowerShellOperationResult result;
             var tempPath = Path.GetTempFileName();
             string args = $"-NoProfile -NonInteractive -Command {cmd} 2>&1 > {tempPath}";
             var pi = new ProcessStartInfo("powershell.exe", args)
@@ -38,16 +39,21 @@ namespace NoJoy
             var process = Process.Start(pi);
             if (!process.WaitForExit(timeoutMilliseconds))
             {
-                Debug.WriteLine("PowerShell timed out");
-                return false;
+                var errorMessage = "PowerShell timed out";
+                Debug.WriteLine(errorMessage);
+                result = new PowerShellOperationResult(false, errorMessage);
             }
-            if (process.ExitCode != 0)
+            else if (process.ExitCode != 0)
             {
                 string errorMessage = File.ReadLines(tempPath).First();
                 Debug.WriteLine($"Error disabling the device: {errorMessage}");
-                return false;
+                result = new PowerShellOperationResult(false, errorMessage);
             }
-            return true;
+            else
+            {
+                result = new PowerShellOperationResult(true);
+            }
+            return result;
         }
     }
 }
