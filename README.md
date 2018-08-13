@@ -4,6 +4,15 @@ Simple tool for enabling/disabling game controllers quickly.
 
 ![screenshot](https://github.com/ssg/NoJoy/blob/master/screenshot.png?raw=true)
 
+# Release Notes
+
+## v0.2 (2018-08-13)
+- Error messages - thanks to Uygar Yilmaz ([@uygary](https://github.com/uygary))
+- When no game controller is found the error is properly displayed
+
+## v0.1 (2018-08-12)
+- Initial release
+
 # History
 
 My friend [@detaybey](https://github.com/detaybey) gifted me the game [INSIDE](http://www.playdead.com/games/inside/) 
