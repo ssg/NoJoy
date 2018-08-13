@@ -38,7 +38,7 @@ to adapt it to a native method.
 # To Do's
 
 - More test coverage
-- Reporting errors to user (currently the tool simply refuses to change state in case of an error)
+- Better UX for the discrepancy between green light and "Disable" verb
 - Native enable/disable for better compatibility with older Windows versions
 - Proper setup and signed binaries, so UAC doesn't perplex the user
 
