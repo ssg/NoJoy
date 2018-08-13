@@ -113,5 +113,8 @@
   <ItemGroup>
     <Resource Include="NoJoy.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="screenshot.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
