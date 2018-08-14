@@ -127,7 +127,7 @@ limitations under the License.
         <TextBlock Opacity="0.3" HorizontalAlignment="Right">
             <Hyperlink x:Name="nameLink" Click="nameLink_Click"
                        FontStyle="Normal" Foreground="Black"
-                       TextDecorations="{x:Null}">Sedat Kapanoglu</Hyperlink> - Aug 2018
+                       TextDecorations="{x:Null}">GitHub</Hyperlink> - Aug 2018
         </TextBlock>
     </StackPanel>
 </Window>
