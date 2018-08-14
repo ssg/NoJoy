@@ -91,7 +91,7 @@ limitations under the License.
                                 </StackPanel>
                             </Button.Content>
                         </Button>
-                        <StackPanel Visibility="{Binding Path=Error, Converter={StaticResource errorVisibilityConverter}}">
+                        <StackPanel Visibility="{Binding Path=ErrorMessage, Converter={StaticResource errorVisibilityConverter}}">
                             <StackPanel Orientation="Horizontal"
                                         HorizontalAlignment="Stretch">
                                 <Button x:Name="ErrorCloseButton"
