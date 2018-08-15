@@ -36,7 +36,7 @@ namespace NoJoy
 
         private void nameLink_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("https://github.com/ssg");
+            Process.Start("https://github.com/ssg/NoJoy");
         }
     }
 }
