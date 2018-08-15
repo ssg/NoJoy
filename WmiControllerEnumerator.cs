@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -23,9 +24,6 @@ namespace NoJoy
     internal class WmiControllerEnumerator
     {
         private const string gameControllerId = "HID_DEVICE_SYSTEM_GAME";
-        private const string hidQuery = 
-            @"SELECT Manufacturer,Name,HardwareID,DeviceID,Status FROM Win32_PnPEntity
-              WHERE PNPClass='HIDClass'";
         private const string saitekHidSuffix = " (HID)";
 
         private class DeviceInfo
@@ -65,6 +63,9 @@ namespace NoJoy
 
         public MainWindowViewModel GetControllers()
         {
+            const string hidQuery = @"SELECT Manufacturer,Name,HardwareID,DeviceID,Status " +
+                "FROM Win32_PnPEntity WHERE PNPClass='HIDClass'";
+
             var searcher = new ManagementObjectSearcher(hidQuery);
             var results = searcher.Get();
             var controllers = new MainWindowViewModel();

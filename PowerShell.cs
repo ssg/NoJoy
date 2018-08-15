@@ -27,10 +27,9 @@ namespace NoJoy
         public static PowerShellOperationResult RunElevated(string cmd)
         {
             PowerShellOperationResult result;
-            var tempPath = Path.GetTempFileName();
+            string tempPath = Path.GetTempFileName();
             string args = $"-NoProfile -NonInteractive -Command {cmd} 2>&1 > {tempPath}";
-            var pi = new ProcessStartInfo("powershell.exe", args)
-            {
+            var pi = new ProcessStartInfo("powershell.exe", args) {
                 WindowStyle = ProcessWindowStyle.Hidden,
                 Verb = elevatedVerb,
                 UseShellExecute = true,
@@ -39,7 +38,7 @@ namespace NoJoy
             var process = Process.Start(pi);
             if (!process.WaitForExit(timeoutMilliseconds))
             {
-                var errorMessage = "PowerShell timed out";
+                string errorMessage = "PowerShell timed out";
                 Debug.WriteLine(errorMessage);
                 result = new PowerShellOperationResult(false, errorMessage);
             }

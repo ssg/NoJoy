@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 using System.ComponentModel;
 using System.Threading;
 
@@ -28,16 +29,14 @@ namespace NoJoy
 
     class GameController : INotifyPropertyChanged
     {
-        private const string standardArguments = "-InformationAction SilentlyContinue -PassThru -Confirm:$false";
         public string Name { get; set; }
 
         public string DeviceId { get; set; }
 
         private GameControllerState state;
-
         public GameControllerState State
         {
-            get { return state; }
+            get => state;
             set
             {
                 state = value;
@@ -49,10 +48,9 @@ namespace NoJoy
         }
 
         private string errorMessage;
-
         public string ErrorMessage
         {
-            get { return errorMessage; }
+            get => errorMessage;
             set
             {
                 errorMessage = value;
@@ -76,24 +74,28 @@ namespace NoJoy
 
         public void Enable()
         {
-            var oldState = State;
+            GameControllerState oldState = State;
             State = GameControllerState.Enabling;
             changeStateInBackground("Enable-PnpDevice", GameControllerState.Enabled, oldState);
         }
 
         public void Disable()
         {
-            var oldState = State;
+            GameControllerState oldState = State;
             State = GameControllerState.Disabling;
             changeStateInBackground("Disable-PnpDevice", GameControllerState.Disabled, oldState);
         }
 
-        private void changeStateInBackground(string command, GameControllerState newState, GameControllerState oldState)
+        private void changeStateInBackground(string verb, GameControllerState newState,
+            GameControllerState oldState)
         {
+            const string standardArguments = "-InformationAction SilentlyContinue -PassThru -Confirm:$false";
+
             ErrorMessage = null;
             ThreadPool.QueueUserWorkItem(delegate
             {
-                var result = PowerShell.RunElevated($"{command} {standardArguments} -InstanceId '{DeviceId}'");
+                string command = $"{verb} {standardArguments} -InstanceId '{DeviceId}'";
+                var result = PowerShell.RunElevated(command);
                 if (result.IsSuccess)
                 {
                     State = newState;
