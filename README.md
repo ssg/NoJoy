@@ -6,6 +6,10 @@ Simple tool for enabling/disabling game controllers quickly.
 
 # Release Notes
 
+## v0.2.1 (2018-08-14)
+- Fix the incorrect appearance of "No game controllers found" message
+- Fix the display of error messages
+
 ## v0.2 (2018-08-13)
 - Error messages - thanks to Uygar Yilmaz ([@uygary](https://github.com/uygary))
 - When no game controller is found the error is properly displayed
