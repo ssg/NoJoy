@@ -26,7 +26,7 @@ namespace NoJoy
         {
             string errorMessage = (string)value;
 
-            return string.IsNullOrEmpty(errorMessage)
+            return String.IsNullOrEmpty(errorMessage)
                 ? Visibility.Hidden
                 : Visibility.Visible;
         }

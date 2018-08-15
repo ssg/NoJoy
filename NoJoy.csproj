@@ -32,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>IDE0049</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -72,7 +73,6 @@
     <Compile Include="BoolToColorConverter.cs" />
     <Compile Include="ErrorVisibilityConverter.cs" />
     <Compile Include="GameController.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="PowerShell.cs" />
     <Compile Include="PowerShellOperationResult.cs" />
     <Compile Include="WmiControllerEnumerator.cs" />
