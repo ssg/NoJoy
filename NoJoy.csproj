@@ -72,6 +72,7 @@
     <Compile Include="BoolToColorConverter.cs" />
     <Compile Include="ErrorVisibilityConverter.cs" />
     <Compile Include="GameController.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="PowerShell.cs" />
     <Compile Include="PowerShellOperationResult.cs" />
     <Compile Include="WmiControllerEnumerator.cs" />
@@ -105,12 +106,10 @@
     <None Include="LICENSE">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="pack.ps1" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
