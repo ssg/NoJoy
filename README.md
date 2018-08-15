@@ -38,6 +38,7 @@ to adapt it to a native method.
 # To Do's
 
 - More test coverage
+- Support for Unity vJoy devices
 - Better UX for the discrepancy between green light and "Disable" verb
 - Native enable/disable for better compatibility with older Windows versions
 - Proper setup and signed binaries, so UAC doesn't perplex the user
