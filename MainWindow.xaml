@@ -35,10 +35,10 @@ limitations under the License.
         <local:ErrorVisibilityConverter x:Key="errorVisibilityConverter" />
     </Window.Resources>
 
-    <StackPanel Margin="10">
+    <StackPanel Margin="10" DataContext="{Binding Source={StaticResource Controllers}}">
         <TextBlock FontSize="24">Game Controllers</TextBlock>
         <ItemsControl Margin="5"
-                      DataContext="{Binding Source={StaticResource Controllers}, Path=Items}"
+                      DataContext="{Binding Path=Items}"
                       ItemsSource="{Binding}"
                       Focusable="False">
 
@@ -46,7 +46,7 @@ limitations under the License.
                 <Style TargetType="ItemsControl">
                     <Setter Property="Visibility" Value="Visible" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Items.Count}" Value="0">
+                        <DataTrigger Binding="{Binding Count}" Value="0">
                             <Setter Property="Visibility"  Value="Hidden" />
                         </DataTrigger>
                     </Style.Triggers>
@@ -117,7 +117,7 @@ limitations under the License.
                 <Style TargetType="TextBlock">
                     <Setter Property="Visibility" Value="Hidden" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Items.Count}" Value="0">
+                        <DataTrigger  Binding="{Binding Items.Count}" Value="0">
                             <Setter Property="Visibility"  Value="Visible" />
                         </DataTrigger>
                     </Style.Triggers>
