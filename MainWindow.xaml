@@ -21,7 +21,7 @@ limitations under the License.
         xmlns:local="clr-namespace:NoJoy"
         mc:Ignorable="d"
         MinWidth="500"
-        Title="NoJoy v0.2.1" Height="350" Width="640" SizeToContent="WidthAndHeight">
+        Title="NoJoy v0.2.2" Height="350" Width="640" SizeToContent="WidthAndHeight">
 
     <Window.DataContext>
         <local:MainWindowViewModel />

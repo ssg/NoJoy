@@ -6,6 +6,9 @@ Simple tool for enabling/disabling game controllers quickly.
 
 # Release Notes
 
+## v0.2.2 (2018-08-22)
+- Fix for Saitek X52 et al
+
 ## v0.2.1 (2018-08-14)
 - Fix the incorrect appearance of "No game controllers found" message
 - Fix the display of error messages

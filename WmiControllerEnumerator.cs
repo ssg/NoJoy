@@ -79,13 +79,10 @@ namespace NoJoy
                 }
 
                 // Saitek hack to identify correct device
-                if (device.Name.EndsWith(saitekHidSuffix))
+                var newDevice = identifySaitekParent(results, device);
+                if (newDevice != null)
                 {
-                    var newDevice = identifySaitekParent(results, device);
-                    if (newDevice != null)
-                    {
-                        device = newDevice;
-                    }
+                    device = newDevice;
                 }
 
                 controllers.Items.Add(device.ToGameController());
@@ -96,7 +93,15 @@ namespace NoJoy
 
         private static DeviceInfo identifySaitekParent(ManagementObjectCollection results, DeviceInfo device)
         {
+            if (!device.Name.EndsWith(saitekHidSuffix))
+            {
+                return null;
+            }
+            string newName = device.Name.Replace(saitekHidSuffix, String.Empty);
+            string usbQuery = "SELECT Manufacturer,Name,HardwareID,DeviceID,Status " +
+                $"FROM Win32_PnPEntity WHERE Name='{newName}'";
             Debug.WriteLine($"Saitek hack: looking for HID'less parent for {device.FullName}");
+            var searcher = new ManagementObjectSearcher(usbQuery);
             string searchFor = device.Name.Replace(saitekHidSuffix, String.Empty);
             DeviceInfo newDevice = null;
             foreach (var subResult in results)
