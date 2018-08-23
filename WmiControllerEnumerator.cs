@@ -25,6 +25,7 @@ namespace NoJoy
     {
         private const string gameControllerId = "HID_DEVICE_SYSTEM_GAME";
         private const string saitekHidSuffix = " (HID)";
+        private const string usbSuffix = " (USB)";
 
         private class DeviceInfo
         {
@@ -72,11 +73,11 @@ namespace NoJoy
             foreach (var result in results)
             {
                 var device = new DeviceInfo(result);
-                Debug.WriteLine($"Testing: {device.FullName}");
                 if (!device.IsGameController)
                 {
                     continue;
                 }
+                Debug.WriteLine($"Testing game controller: {device.FullName}");
 
                 // Saitek hack to identify correct device
                 var newDevice = identifySaitekParent(results, device);
@@ -97,29 +98,38 @@ namespace NoJoy
             {
                 return null;
             }
-            string newName = device.Name.Replace(saitekHidSuffix, String.Empty);
+            Debug.WriteLine($"Saitek hack: looking for HID'less parent for '{device.FullName}'");
+
+            // Saitek X55
+            string suffixlessName = device.Name.Replace(saitekHidSuffix, String.Empty);
+
+            // Saitek X52
+            string nameWithUsbSuffix = device.Name.Replace(saitekHidSuffix, usbSuffix);
+
+            var newDevice = findDeviceByNames(suffixlessName, nameWithUsbSuffix);
+            if (newDevice != null)
+            {
+                Debug.WriteLine($"Identified correct parent as '{newDevice.FullName}'");
+                return newDevice;
+            }
+
+            Debug.WriteLine($"Saitek hack: failed to identify correct parent for '{device.FullName}'");
+            return null;
+        }
+
+        private static DeviceInfo findDeviceByNames(params string[] validNames)
+        {
+            string whereClause = String.Join(" OR ", validNames.Select(n => $"Name='{n}'"));
             string usbQuery = "SELECT Manufacturer,Name,HardwareID,DeviceID,Status " +
-                $"FROM Win32_PnPEntity WHERE Name='{newName}'";
-            Debug.WriteLine($"Saitek hack: looking for HID'less parent for {device.FullName}");
+                $"FROM Win32_PnPEntity WHERE {whereClause}";
             var searcher = new ManagementObjectSearcher(usbQuery);
-            string searchFor = device.Name.Replace(saitekHidSuffix, String.Empty);
-            DeviceInfo newDevice = null;
-            foreach (var subResult in results)
+            var results = searcher.Get();
+            foreach (var result in results)
             {
-                var newInfo = new DeviceInfo(subResult);
-                if (newInfo.Name == searchFor)
-                {
-                    newDevice = newInfo;
-                    break;
-                }
+                // return the first result as we favor suffixless over (USB) suffix
+                return new DeviceInfo(result);
             }
-            if (newDevice == null)
-            {
-                Debug.WriteLine($"Saitek hack: failed to identify correct parent for {device.FullName}");
-                return null;
-            }
-            Debug.WriteLine($"Identified correct parent as {newDevice.FullName}");
-            return newDevice;
+            return null;
         }
     }
 }
