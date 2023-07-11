@@ -80,7 +80,7 @@ namespace NoJoy
                 Debug.WriteLine($"Testing game controller: {device.FullName}");
 
                 // Saitek hack to identify correct device
-                var newDevice = identifySaitekParent(results, device);
+                var newDevice = identifySaitekParent(device);
                 if (newDevice != null)
                 {
                     device = newDevice;
@@ -92,7 +92,7 @@ namespace NoJoy
             return controllers;
         }
 
-        private static DeviceInfo identifySaitekParent(ManagementObjectCollection results, DeviceInfo device)
+        private static DeviceInfo identifySaitekParent(DeviceInfo device)
         {
             if (!device.Name.EndsWith(saitekHidSuffix))
             {

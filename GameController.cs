@@ -92,7 +92,7 @@ namespace NoJoy
             const string standardArguments = "-InformationAction SilentlyContinue -PassThru -Confirm:$false";
 
             ErrorMessage = null;
-            ThreadPool.QueueUserWorkItem(delegate
+            _ = ThreadPool.QueueUserWorkItem(delegate
             {
                 string command = $"{verb} {standardArguments} -InstanceId '{DeviceId}'";
                 var result = PowerShell.RunElevated(command);
