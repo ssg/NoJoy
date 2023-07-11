@@ -44,9 +44,9 @@ namespace NoJoy
             }
             else if (process.ExitCode != 0)
             {
-                string errorMessage = File.ReadLines(tempPath).First();
+                string errorMessage = File.ReadLines(tempPath).FirstOrDefault();
                 Debug.WriteLine($"Error disabling the device: {errorMessage}");
-                result = new PowerShellOperationResult(false, errorMessage);
+                result = new PowerShellOperationResult(false, errorMessage ?? "-no error message generated-");
             }
             else
             {
