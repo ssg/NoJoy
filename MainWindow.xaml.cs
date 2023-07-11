@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -37,6 +39,16 @@ namespace NoJoy
         private void nameLink_Click(object sender, RoutedEventArgs e)
         {
             _ = Process.Start("https://github.com/ssg/NoJoy");
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Title = $"NoJoy v{getReadableVersionFromBinary()}";
+        }
+
+        private string getReadableVersionFromBinary()
+        {
+            return GetType().Assembly.GetName().Version.ToString(3); // don't use the last nibble
         }
     }
 }

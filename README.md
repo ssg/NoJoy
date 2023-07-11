@@ -6,6 +6,10 @@ Simple tool for enabling/disabling game controllers quickly.
 
 # Release Notes
 
+## v0.2.3 (2023-07-11)
+- Fix crash when PnP operation generates no output
+- Read version from the executable instead of having it hardcoded.
+
 ## v0.2.2 (2018-08-22)
 - Fix for Saitek X52 et al
 
