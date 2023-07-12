@@ -13,18 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
-namespace NoJoy
+namespace NoJoy;
+
+class MainWindowViewModel
 {
-    class MainWindowViewModel
-    {
-        public List<GameController> Items { get; set; } = new List<GameController>();
+    public List<GameController> Items { get; set; } = new List<GameController>();
 
-        public Visibility NotFoundVisibility => Items.Any() ? Visibility.Hidden : Visibility.Visible;
+    public Visibility NotFoundVisibility => Items.Any() ? Visibility.Hidden : Visibility.Visible;
 
-        public string LastErrorMessage { get; set; }
-    }
+    public string LastErrorMessage { get; set; } = String.Empty;
 }

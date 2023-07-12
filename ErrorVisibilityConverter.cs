@@ -18,26 +18,25 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace NoJoy
+namespace NoJoy;
+
+public class ErrorVisibilityConverter : IValueConverter
 {
-    public class ErrorVisibilityConverter : IValueConverter
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            string errorMessage = (string)value;
+        string errorMessage = (string)value;
 
-            return String.IsNullOrEmpty(errorMessage)
-                ? Visibility.Hidden
-                : Visibility.Visible;
-        }
+        return String.IsNullOrEmpty(errorMessage)
+            ? Visibility.Hidden
+            : Visibility.Visible;
+    }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var visibility = (Visibility)value;
+    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        var visibility = (Visibility)value;
 
-            return visibility == Visibility.Visible
-                ? "ERROR"
-                : null;
-        }
+        return visibility == Visibility.Visible
+            ? "ERROR"
+            : null;
     }
 }

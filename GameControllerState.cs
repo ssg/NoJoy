@@ -13,16 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 namespace NoJoy;
 
-public class PowerShellOperationResult
+enum GameControllerState
 {
-    public bool IsSuccess { get; private set; }
-    public string? ErrorMessage { get; private set; }
-
-    public PowerShellOperationResult(bool isSuccess, string? errorMessage = null)
-    {
-        IsSuccess = isSuccess;
-        ErrorMessage = errorMessage;
-    }
+    Disabled,
+    Enabled,
+    Disabling,
+    Enabling,
 }

@@ -2,51 +2,54 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace NoJoy
+namespace NoJoy;
+
+public partial class MainWindow : Window
 {
-    public partial class MainWindow : Window
+    public MainWindow()
     {
-        public MainWindow()
+        InitializeComponent();
+    }
+
+    private void EnableDisableButton_Click(object sender, RoutedEventArgs e)
+    {
+        var button = sender as Button;
+        var controller = button?.DataContext as GameController;
+        switch (controller?.State)
         {
-            InitializeComponent();
+            case GameControllerState.Enabled:
+                controller.Disable();
+                break;
+
+            case GameControllerState.Disabled:
+                controller.Enable();
+                break;
         }
+    }
 
-        private void EnableDisableButton_Click(object sender, RoutedEventArgs e)
+    private void OnErrorCloseButtonClicked(object sender, RoutedEventArgs e)
+    {
+        var button = sender as Button;
+        var controller = button?.DataContext as GameController;
+        if (controller is not null)
         {
-            var button = sender as Button;
-            var controller = button.DataContext as GameController;
-            switch (controller.State)
-            {
-                case GameControllerState.Enabled:
-                    controller.Disable();
-                    break;
-
-                case GameControllerState.Disabled:
-                    controller.Enable();
-                    break;
-            }
-        }
-
-        private void OnErrorCloseButtonClicked(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            var controller = button.DataContext as GameController;
             controller.ErrorMessage = null;
-        }
+        }        
+    }
 
-        private void nameLink_Click(object sender, RoutedEventArgs e)
-        {
-            _ = Process.Start("https://github.com/ssg/NoJoy");
-        }
+    private void nameLink_Click(object sender, RoutedEventArgs e)
+    {
+        _ = Process.Start("https://github.com/ssg/NoJoy");
+    }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            Title = $"NoJoy v{getReadableVersionFromBinary()}";
-        }
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+    {
+        Title = $"NoJoy v{getReadableVersionFromBinary() ?? "???"}";
+    }
 
-        private string getReadableVersionFromBinary()
-        {
-            return GetType().Assembly.GetName().Version.ToString(3); // don't use the last nibble
-        }
+    private string? getReadableVersionFromBinary()
+    {
+        // don't use the last nibble
+        return GetType().Assembly.GetName().Version?.ToString(3);
     }
 }

@@ -6,6 +6,13 @@ Simple tool for enabling/disabling game controllers quickly.
 
 # Release Notes
 
+## v0.3.0 (2023-07-11)
+- Upgraded to self-contained executables (using .NET 7.0 now). Because of that, the executables 
+  will be distributed in separate packages for different CPU architectures (x64 and ARM64).
+- Changed "Enable"/"Disable" icons with a single power icon. The previous "Enable/Disable" 
+  toggles were confusing. 
+- UI has better accessibility hints.
+
 ## v0.2.3 (2023-07-11)
 - Fix crash when PnP operation generates no output
 - Read version from the executable instead of having it hardcoded.
@@ -50,7 +57,7 @@ to adapt it to a native method.
 
 - More test coverage
 - Support for Unity vJoy devices
-- Better UX for the discrepancy between green light and "Disable" verb
+- ~~Better UX for the discrepancy between green light and "Disable" verb~~
 - Native enable/disable for better compatibility with older Windows versions
 - Proper setup and signed binaries, so UAC doesn't perplex the user
 

@@ -71,23 +71,27 @@ limitations under the License.
                                    HorizontalAlignment="Center"
                                    Height="56"
                                    TextWrapping="Wrap"
-                                   MaxWidth="160" ></TextBlock>
+                                   MaxWidth="160" AutomationProperties.HelpText="Controller name" ></TextBlock>
                         <Button x:Name="EnableDisableButton"
                                 HorizontalAlignment="Center"
                                 FontSize="15"
                                 Margin="0,10,0,10"
                                 Padding="5,5,10,5"
-                                Width="90"
+                                Width="90"                                
                                 IsEnabled="{Binding Path=IsButtonEnabled}"
-                                Click="EnableDisableButton_Click">
+                                Click="EnableDisableButton_Click" 
+                                AutomationProperties.Name="Toggle">
                             <Button.Content>
-                                <StackPanel Orientation="Horizontal" Margin="-5,0,0,0">
-                                    <Border Margin="0,0,10,0" BorderBrush="Black" BorderThickness="1">
-                                        <Canvas Width="10"
+                                <StackPanel Orientation="Horizontal" 
+                                            Margin="-5,0,0,0" 
+                                            Width="60" 
+                                            VerticalAlignment="Center">
+                                    <Border Margin="0,0,20,0" BorderBrush="Black" BorderThickness="1" AutomationProperties.HelpText="Toggle controller">
+                                        <Canvas Width="10"                                                
                                                 Background="{Binding Path=IsEnabled, Converter={StaticResource boolToColorConverter}}">
                                         </Canvas>
                                     </Border>
-                                    <TextBlock Text="{Binding Path=ButtonText}"></TextBlock>
+                                    <Image Source="/power.png" Width="20" Height="24"></Image>
                                 </StackPanel>
                             </Button.Content>
                         </Button>

@@ -14,98 +14,89 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System;
 using System.ComponentModel;
 using System.Threading;
 
-namespace NoJoy
+namespace NoJoy;
+
+class GameController : INotifyPropertyChanged
 {
-    enum GameControllerState
+    public string Name { get; set; } = String.Empty;
+
+    public string DeviceId { get; set; } = String.Empty;
+
+    private GameControllerState state;
+    public GameControllerState State
     {
-        Disabled,
-        Enabled,
-        Disabling,
-        Enabling,
+        get => state;
+        set
+        {
+            state = value;
+            onPropertyChanged(nameof(State));
+            onPropertyChanged(nameof(IsButtonEnabled));
+            onPropertyChanged(nameof(ButtonText));
+            onPropertyChanged(nameof(IsEnabled));
+        }
     }
 
-    class GameController : INotifyPropertyChanged
+    private string? errorMessage;
+    public string? ErrorMessage
     {
-        public string Name { get; set; }
-
-        public string DeviceId { get; set; }
-
-        private GameControllerState state;
-        public GameControllerState State
+        get => errorMessage;
+        set
         {
-            get => state;
-            set
+            errorMessage = value;
+            onPropertyChanged(nameof(ErrorMessage));
+        }
+    }
+
+    public bool IsEnabled => State == GameControllerState.Enabled;
+
+    public string ButtonText => IsEnabled ? "Disable" : "Enable";
+
+    public bool IsButtonEnabled => State is GameControllerState.Enabled or GameControllerState.Disabled;
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private void onPropertyChanged(string name)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    }
+
+    public void Enable()
+    {
+        GameControllerState oldState = State;
+        State = GameControllerState.Enabling;
+        changeStateInBackground("Enable-PnpDevice", GameControllerState.Enabled, oldState);
+    }
+
+    public void Disable()
+    {
+        GameControllerState oldState = State;
+        State = GameControllerState.Disabling;
+        changeStateInBackground("Disable-PnpDevice", GameControllerState.Disabled, oldState);
+    }
+
+    private void changeStateInBackground(string verb, GameControllerState newState,
+        GameControllerState oldState)
+    {
+        const string standardArguments = "-InformationAction SilentlyContinue -PassThru -Confirm:$false";
+
+        ErrorMessage = null;
+        _ = ThreadPool.QueueUserWorkItem(delegate
+        {
+            string command = $"{verb} {standardArguments} -InstanceId '{DeviceId}'";
+            var result = PowerShell.RunElevated(command);
+            if (result.IsSuccess)
             {
-                state = value;
-                onPropertyChanged(nameof(State));
-                onPropertyChanged(nameof(IsButtonEnabled));
-                onPropertyChanged(nameof(ButtonText));
-                onPropertyChanged(nameof(IsEnabled));
+                State = newState;
             }
-        }
-
-        private string errorMessage;
-        public string ErrorMessage
-        {
-            get => errorMessage;
-            set
+            else
             {
-                errorMessage = value;
-                onPropertyChanged(nameof(ErrorMessage));
+                State = oldState;
+                ErrorMessage = result.ErrorMessage;
             }
-        }
-
-        public bool IsEnabled => State == GameControllerState.Enabled;
-
-        public string ButtonText => IsEnabled ? "Disable" : "Enable";
-
-        public bool IsButtonEnabled => (State == GameControllerState.Enabled)
-            || (State == GameControllerState.Disabled);
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void onPropertyChanged(string name)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
-        public void Enable()
-        {
-            GameControllerState oldState = State;
-            State = GameControllerState.Enabling;
-            changeStateInBackground("Enable-PnpDevice", GameControllerState.Enabled, oldState);
-        }
-
-        public void Disable()
-        {
-            GameControllerState oldState = State;
-            State = GameControllerState.Disabling;
-            changeStateInBackground("Disable-PnpDevice", GameControllerState.Disabled, oldState);
-        }
-
-        private void changeStateInBackground(string verb, GameControllerState newState,
-            GameControllerState oldState)
-        {
-            const string standardArguments = "-InformationAction SilentlyContinue -PassThru -Confirm:$false";
-
-            ErrorMessage = null;
-            _ = ThreadPool.QueueUserWorkItem(delegate
-            {
-                string command = $"{verb} {standardArguments} -InstanceId '{DeviceId}'";
-                var result = PowerShell.RunElevated(command);
-                if (result.IsSuccess)
-                {
-                    State = newState;
-                }
-                else
-                {
-                    State = oldState;
-                    ErrorMessage = result.ErrorMessage;
-                }
-            }, this);
-        }
+        }, this);
     }
 }
