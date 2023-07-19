@@ -16,6 +16,7 @@ Simple tool for enabling/disabling game controllers quickly.
 ## v0.2.3 (2023-07-11)
 - Fix crash when PnP operation generates no output
 - Read version from the executable instead of having it hardcoded.
+- This version switches to .NET 4.8 from .NET 4.6.
 
 ## v0.2.2 (2018-08-22)
 - Fix for Saitek X52 et al
