@@ -15,7 +15,8 @@
 		<Authors>sedat@kapanoglu.com</Authors>
 	</PropertyGroup>
 	<ItemGroup>
-	  <None Remove="power.png" />
+	  <None Remove="img\power.png" />
+	  <None Remove="img\power.svg" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Update="app.manifest">
@@ -26,8 +27,9 @@
 		</None>
 	</ItemGroup>
 	<ItemGroup>
+		<Resource Include="img\power.png" />
+		<Resource Include="img\power.svg" />
 		<Resource Include="NoJoy.ico" />
-		<Resource Include="power.png" />
 	</ItemGroup>
 	<ItemGroup>
 		<Resource Include="screenshot.png" />
