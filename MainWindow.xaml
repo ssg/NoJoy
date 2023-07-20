@@ -87,7 +87,7 @@ limitations under the License.
                                                 Background="{Binding Path=IsEnabled, Converter={StaticResource boolToColorConverter}}">
                                         </Canvas>
                                     </Border>
-                                    <TextBlock Text="{Binding Path=ButtonText}"></TextBlock>
+                                    <Image Source="img/power.png" Width="20" Margin="10,0,0,0"></Image>
                                 </StackPanel>
                             </Button.Content>
                         </Button>

@@ -42,7 +42,6 @@ namespace NoJoy
                 state = value;
                 onPropertyChanged(nameof(State));
                 onPropertyChanged(nameof(IsButtonEnabled));
-                onPropertyChanged(nameof(ButtonText));
                 onPropertyChanged(nameof(IsEnabled));
             }
         }
@@ -59,8 +58,6 @@ namespace NoJoy
         }
 
         public bool IsEnabled => State == GameControllerState.Enabled;
-
-        public string ButtonText => IsEnabled ? "Disable" : "Enable";
 
         public bool IsButtonEnabled => (State == GameControllerState.Enabled)
             || (State == GameControllerState.Disabled);

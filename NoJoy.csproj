@@ -146,5 +146,9 @@
   <ItemGroup>
     <Resource Include="screenshot.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\power.png" />
+    <Content Include="img\power.svg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

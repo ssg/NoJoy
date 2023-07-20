@@ -6,6 +6,10 @@ Simple tool for enabling/disabling game controllers quickly.
 
 # Release Notes
 
+## v0.3.0 (2023-07-20)
+- Faster enable/disable and fix some incompatibilities with certain Windows versions.
+- More intuitive power icon instead of confusing enable/disable labels.
+
 ## v0.2.3 (2023-07-11)
 - Fix crash when PnP operation generates no output
 - Read version from the executable instead of having it hardcoded.
