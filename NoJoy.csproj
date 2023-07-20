@@ -41,6 +41,30 @@
   <PropertyGroup>
     <ApplicationIcon>NoJoy.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>NoJoy.App</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>IDE0049</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -74,8 +98,8 @@
     <Compile Include="BoolToColorConverter.cs" />
     <Compile Include="ErrorVisibilityConverter.cs" />
     <Compile Include="GameController.cs" />
-    <Compile Include="PowerShell.cs" />
-    <Compile Include="PowerShellOperationResult.cs" />
+    <Compile Include="PnpUtil.cs" />
+    <Compile Include="ShellResult.cs" />
     <Compile Include="WmiControllerEnumerator.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">

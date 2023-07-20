@@ -76,26 +76,24 @@ namespace NoJoy
         {
             GameControllerState oldState = State;
             State = GameControllerState.Enabling;
-            changeStateInBackground("Enable-PnpDevice", GameControllerState.Enabled, oldState);
+            changeStateInBackground("/enable-device", GameControllerState.Enabled, oldState);
         }
 
         public void Disable()
         {
             GameControllerState oldState = State;
             State = GameControllerState.Disabling;
-            changeStateInBackground("Disable-PnpDevice", GameControllerState.Disabled, oldState);
+            changeStateInBackground("/disable-device", GameControllerState.Disabled, oldState);
         }
 
         private void changeStateInBackground(string verb, GameControllerState newState,
             GameControllerState oldState)
         {
-            const string standardArguments = "-InformationAction SilentlyContinue -PassThru -Confirm:$false";
-
             ErrorMessage = null;
             _ = ThreadPool.QueueUserWorkItem(delegate
             {
-                string command = $"{verb} {standardArguments} -InstanceId '{DeviceId}'";
-                var result = PowerShell.RunElevated(command);
+                string command = $"{verb} \"{DeviceId}\"";
+                var result = PnpUtil.RunElevated(command);
                 if (result.IsSuccess)
                 {
                     State = newState;
