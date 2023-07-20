@@ -11,7 +11,7 @@ Where the build artifacts are located.
 
 param (
    [Parameter(Mandatory=$true)][string]$Version,
-   [string]$BuildOutputDirectory = "bin\Release"
+   [string]$BuildOutputDirectory = "bin\x64\Release"
 )
 
 $files = "NoJoy.exe","NoJoy.exe.config","LICENSE" 
