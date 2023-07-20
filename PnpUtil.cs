@@ -14,48 +14,49 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
+using System.Text;
 
 namespace NoJoy;
 
-public static class PowerShell
+public static class PnpUtil
 {
     private const string elevatedVerb = "runas";
     private const int timeoutMilliseconds = 30_000;
 
-    public static PowerShellOperationResult RunElevated(string cmd)
+    public static ShellResult RunElevated(string args)
     {
-        PowerShellOperationResult result;
-        string tempPath = Path.GetTempFileName();
-        string args = $"-NoProfile -NonInteractive -Command {cmd} 2>&1 > {tempPath}";
-        var pi = new ProcessStartInfo("powershell.exe", args) {
+        var pi = new ProcessStartInfo("pnputil.exe", args) {
             WindowStyle = ProcessWindowStyle.Hidden,
             Verb = elevatedVerb,
-            UseShellExecute = true,
+            UseShellExecute = false,
             CreateNoWindow = true,
+            RedirectStandardError = true,
+            RedirectStandardOutput = true,
         };
-        var process = Process.Start(pi);
-        if (process is null)
+        var process = new Process
         {
-            return new PowerShellOperationResult(false, "Couldn't start PowerShell process");
-        }
+            StartInfo = pi
+        };
+        var stdout = new StringBuilder();
+        process.OutputDataReceived += (sender, args) => stdout.AppendLine(args.Data);
+        process.ErrorDataReceived += (sender, args) => stdout.AppendLine(args.Data);
+        _ = process.Start();
+        process.BeginOutputReadLine();
+        process.BeginErrorReadLine();        
         if (!process.WaitForExit(timeoutMilliseconds))
         {
-            string errorMessage = "PowerShell timed out";
+            string errorMessage = "Execution timeout";
             Debug.WriteLine(errorMessage);
-            result = new PowerShellOperationResult(false, errorMessage);
+            return new ShellResult(false, errorMessage);
         }
-        else if (process.ExitCode != 0)
+
+        if (process.ExitCode != 0)
         {
-            string? errorMessage = File.ReadLines(tempPath).FirstOrDefault();
+            string errorMessage = stdout.ToString().Trim();
             Debug.WriteLine($"Error disabling the device: {errorMessage}");
-            result = new PowerShellOperationResult(false, errorMessage ?? "-no error message generated-");
+            return new ShellResult(false, errorMessage);
         }
-        else
-        {
-            result = new PowerShellOperationResult(true);
-        }
-        return result;
+
+        return new ShellResult(success: true);
     }
 }

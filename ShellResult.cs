@@ -15,14 +15,14 @@ limitations under the License.
 */
 namespace NoJoy;
 
-public class PowerShellOperationResult
+public class ShellResult
 {
     public bool IsSuccess { get; private set; }
     public string? ErrorMessage { get; private set; }
 
-    public PowerShellOperationResult(bool isSuccess, string? errorMessage = null)
+    public ShellResult(bool success, string? errorMessage = null)
     {
-        IsSuccess = isSuccess;
+        IsSuccess = success;
         ErrorMessage = errorMessage;
     }
 }
