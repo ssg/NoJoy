@@ -2,7 +2,7 @@
 
 Simple tool for enabling/disabling game controllers quickly.
 
-![screenshot](https://github.com/ssg/NoJoy/blob/master/screenshot.png?raw=true)
+<img alt="screenshot" src="https://github.com/ssg/NoJoy/assets/241217/2ef30a9f-77a4-4412-b763-d38218a5d1c3" width=500>
 
 # Release Notes
 
