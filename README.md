@@ -6,6 +6,10 @@ Simple tool for enabling/disabling game controllers quickly.
 
 # Release Notes
 
+## v0.3.1 (2023-07-23)
+(Minor release) Fix version string. This release is otherwise identical to 0.3.0.
+0.3.0 will be removed from release lists.
+
 ## v0.3.0 (2023-07-20)
 - Faster enable/disable and fix some incompatibilities with certain Windows versions.
 - More intuitive power icon instead of confusing enable/disable labels.
